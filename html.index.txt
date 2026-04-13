@@ -1,0 +1,611 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>StayDocs - All Your Bookings In One Place</title>
+    <meta
+      name="description"
+      content="StayDocs helps small hotels, resorts, and homestays in India manage Airbnb, Booking.com, MakeMyTrip, and walk-in bookings in one simple dashboard."
+    />
+
+    <meta property="og:title" content="StayDocs - Booking Management for Indian Hospitality" />
+    <meta
+      property="og:description"
+      content="Stop checking 5 apps for your bookings. One dashboard. Every booking. 30 seconds."
+    />
+    <meta property="og:type" content="website" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&display=swap"
+      rel="stylesheet"
+    />
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        theme: {
+          extend: {
+            fontFamily: {
+              sans: ['DM Sans', 'ui-sans-serif', 'system-ui', 'sans-serif'],
+            },
+            colors: {
+              primaryText: '#222222',
+              secondaryText: '#717171',
+              brandAmber: '#D4922A',
+              brandCharcoal: '#2D2D2D',
+              cardGray: '#F7F7F7',
+              painCoral: '#E8604C',
+              successGreen: '#059669',
+              footerDark: '#1A1A1A',
+            },
+            boxShadow: {
+              card: '0 10px 30px rgba(0,0,0,0.06)',
+              nav: '0 6px 20px rgba(0,0,0,0.08)',
+              phone: '0 30px 60px rgba(0,0,0,0.16)',
+            },
+          },
+        },
+      };
+    </script>
+
+    <style>
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        font-family: 'DM Sans', ui-sans-serif, system-ui, sans-serif;
+        color: #222222;
+        background: #ffffff;
+      }
+
+      .site-wrap {
+        max-width: 1200px;
+      }
+
+      .section-label {
+        color: #d4922a;
+        letter-spacing: 0.12em;
+      }
+
+      .fade-section {
+        opacity: 0;
+        transform: translateY(26px);
+        transition: opacity 0.7s ease, transform 0.7s ease;
+      }
+
+      .fade-section.in-view {
+        opacity: 1;
+        transform: translateY(0);
+      }
+
+      .logo-s-icon {
+        width: 26px;
+        height: 26px;
+        flex: 0 0 auto;
+      }
+
+      .phone-shell {
+        border: 10px solid #111111;
+        border-radius: 38px;
+        background: #f8f8f8;
+      }
+
+      .hero-phone-tilt {
+        transform: rotate(5deg);
+      }
+
+      .faq-content {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.35s ease;
+      }
+
+      .faq-item.open .faq-content {
+        max-height: 220px;
+      }
+
+      .faq-item.open .faq-arrow {
+        transform: rotate(180deg);
+      }
+
+      .faq-arrow {
+        transition: transform 0.25s ease;
+      }
+
+      @media (max-width: 767px) {
+        .hero-phone-tilt {
+          transform: rotate(0deg);
+        }
+      }
+    </style>
+
+    <link rel="icon" type="image/png" href="assets/favicon-s.png" />
+  </head>
+
+  <body class="antialiased">
+    <header id="navbar" class="sticky top-0 z-50 border-b border-black/5 bg-white/95 backdrop-blur">
+      <div class="site-wrap mx-auto flex h-20 items-center justify-between px-5 md:px-8">
+        <a href="#hero" class="flex items-center gap-2" aria-label="StayDocs home">
+          <img src="assets/staydocs-logo-cropped.png" alt="StayDocs logo" class="h-11 w-auto" />
+        </a>
+
+        <nav class="hidden items-center gap-8 md:flex">
+          <a class="text-secondaryText transition-colors hover:text-primaryText" href="#features">Features</a>
+          <a class="text-secondaryText transition-colors hover:text-primaryText" href="#pricing">Pricing</a>
+          <a class="text-secondaryText transition-colors hover:text-primaryText" href="#faq">FAQ</a>
+          <a
+            href="#final-cta"
+            class="inline-flex h-10 items-center rounded-lg bg-brandCharcoal px-4 text-sm font-semibold text-white"
+            >Join Waitlist</a
+          >
+        </nav>
+
+        <button id="menu-btn" class="inline-flex items-center justify-center rounded-lg border border-black/10 p-2 md:hidden" aria-label="Open menu">
+          <svg class="h-6 w-6 text-brandCharcoal" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16" />
+          </svg>
+        </button>
+      </div>
+
+      <div id="mobile-menu" class="hidden border-t border-black/5 bg-white md:hidden">
+        <div class="space-y-2 px-5 py-4">
+          <a class="block py-2 text-secondaryText" href="#features">Features</a>
+          <a class="block py-2 text-secondaryText" href="#pricing">Pricing</a>
+          <a class="block py-2 text-secondaryText" href="#faq">FAQ</a>
+          <a href="#final-cta" class="mt-2 inline-flex h-11 items-center rounded-lg bg-brandCharcoal px-4 font-semibold text-white">Join Waitlist</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section id="hero" class="fade-section px-5 pb-20 pt-14 md:px-8 md:pb-28 md:pt-20">
+        <div class="site-wrap mx-auto grid items-center gap-12 lg:grid-cols-12">
+          <div class="lg:col-span-7">
+            <span class="inline-flex rounded-full bg-cardGray px-4 py-2 text-sm font-medium text-secondaryText">🇮🇳 Built for Indian Hospitality</span>
+            <h1 class="mt-6 text-4xl font-extrabold leading-tight text-primaryText md:text-5xl">
+              Stop checking 5 apps for your bookings
+            </h1>
+            <p class="mt-5 max-w-2xl text-lg leading-relaxed text-secondaryText md:text-xl">
+              StayDocs brings your Airbnb, Booking.com, MakeMyTrip, and walk-in bookings into one simple dashboard on your phone.
+            </p>
+
+            <div class="mt-8">
+              <a
+                href="#final-cta"
+                class="inline-flex h-[52px] items-center rounded-lg bg-brandAmber px-7 text-base font-semibold text-white"
+                >Join Waitlist - It's Free -></a
+              >
+              <p class="mt-3 text-sm text-secondaryText">Launching June 2026 - No credit card needed</p>
+            </div>
+
+            <p class="mt-7 text-sm text-secondaryText">
+              <span class="font-semibold text-primaryText">Works with:</span>
+              <span class="text-gray-400"> Airbnb - Booking.com - MakeMyTrip - Agoda - Goibibo</span>
+            </p>
+          </div>
+
+          <div class="lg:col-span-5">
+            <div class="mx-auto w-full max-w-[360px]">
+              <div class="hero-phone-tilt rounded-[2.3rem] bg-white p-2 shadow-phone">
+                <div class="phone-shell overflow-hidden p-4">
+                  <div class="rounded-2xl bg-white p-4">
+                    <p class="text-sm text-secondaryText">Good Morning, Hari</p>
+                    <h3 class="mt-1 text-lg font-bold text-primaryText">Dashboard</h3>
+
+                    <div class="mt-4 grid grid-cols-2 gap-2">
+                      <div class="rounded-xl bg-cardGray p-3">
+                        <p class="text-xs text-secondaryText">Arrivals</p>
+                        <p class="mt-1 text-lg font-bold text-primaryText">12</p>
+                      </div>
+                      <div class="rounded-xl bg-cardGray p-3">
+                        <p class="text-xs text-secondaryText">Occupancy</p>
+                        <p class="mt-1 text-lg font-bold text-primaryText">84%</p>
+                      </div>
+                    </div>
+
+                    <div class="mt-4 space-y-2">
+                      <div class="rounded-xl border border-black/5 p-3">
+                        <div class="flex items-center justify-between">
+                          <p class="font-semibold text-primaryText">Asha R.</p>
+                          <span class="rounded-full bg-cardGray px-2 py-0.5 text-xs text-secondaryText">Airbnb</span>
+                        </div>
+                        <p class="text-xs text-secondaryText">Deluxe Room - Check-in today</p>
+                      </div>
+                      <div class="rounded-xl border border-black/5 p-3">
+                        <div class="flex items-center justify-between">
+                          <p class="font-semibold text-primaryText">Ravi K.</p>
+                          <span class="rounded-full bg-cardGray px-2 py-0.5 text-xs text-secondaryText">MakeMyTrip</span>
+                        </div>
+                        <p class="text-xs text-secondaryText">Ocean View - 2 nights</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="problem" class="fade-section bg-cardGray px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto">
+          <p class="section-label text-xs font-bold">THE PROBLEM</p>
+          <h2 class="mt-3 text-3xl font-bold text-primaryText md:text-4xl">Sound familiar?</h2>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <article class="rounded-2xl bg-white p-7 shadow-card">
+              <p class="text-4xl font-extrabold text-painCoral">30 min</p>
+              <h3 class="mt-2 text-xl font-bold text-primaryText">wasted every morning</h3>
+              <p class="mt-3 text-sm leading-relaxed text-secondaryText">
+                Checking Airbnb, then Booking.com, then MakeMyTrip, then WhatsApp - just to see if anyone booked.
+              </p>
+            </article>
+
+            <article class="rounded-2xl bg-white p-7 shadow-card">
+              <p class="text-4xl font-extrabold text-painCoral">₹15,000</p>
+              <h3 class="mt-2 text-xl font-bold text-primaryText">lost every month</h3>
+              <p class="mt-3 text-sm leading-relaxed text-secondaryText">
+                Double bookings, missed payments, and walk-ins nobody wrote down. Money that silently disappears.
+              </p>
+            </article>
+
+            <article class="rounded-2xl bg-white p-7 shadow-card">
+              <p class="text-4xl font-extrabold text-painCoral">5 apps</p>
+              <h3 class="mt-2 text-xl font-bold text-primaryText">that don't talk to each other</h3>
+              <p class="mt-3 text-sm leading-relaxed text-secondaryText">
+                Airbnb doesn't know about Booking.com. MakeMyTrip doesn't know about walk-ins. Nobody has the full picture.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="solution" class="fade-section px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto">
+          <p class="section-label text-xs font-bold">THE SOLUTION</p>
+          <h2 class="mt-3 text-3xl font-bold text-primaryText md:text-4xl">One dashboard. Every booking. 30 seconds.</h2>
+
+          <div class="mt-12 grid items-center gap-8 lg:grid-cols-[1fr_auto_1fr]">
+            <div class="rounded-2xl border border-black/10 bg-cardGray p-6">
+              <p class="mb-4 text-sm font-semibold text-secondaryText">Before</p>
+              <div class="relative h-48">
+                <span class="absolute left-2 top-6 rounded-full bg-white px-3 py-1 text-xs text-secondaryText">Airbnb</span>
+                <span class="absolute right-4 top-2 rounded-full bg-white px-3 py-1 text-xs text-secondaryText">Booking.com</span>
+                <span class="absolute left-12 top-24 rounded-full bg-white px-3 py-1 text-xs text-secondaryText">MMT</span>
+                <span class="absolute right-10 top-28 rounded-full bg-white px-3 py-1 text-xs text-secondaryText">WhatsApp</span>
+                <span class="absolute left-28 top-40 rounded-full bg-white px-3 py-1 text-xs text-secondaryText">Notebook</span>
+                <svg class="absolute inset-0 h-full w-full" viewBox="0 0 300 180" fill="none">
+                  <path d="M45 36C130 20 180 60 244 20" stroke="#BFBFBF" stroke-width="2"/>
+                  <path d="M75 95C140 72 170 125 240 104" stroke="#BFBFBF" stroke-width="2"/>
+                  <path d="M118 146C150 84 198 80 206 34" stroke="#BFBFBF" stroke-width="2"/>
+                </svg>
+              </div>
+            </div>
+
+            <div class="text-center text-3xl font-bold text-brandAmber">→</div>
+
+            <div class="rounded-2xl border border-black/10 bg-white p-6 shadow-card">
+              <p class="mb-4 text-sm font-semibold text-secondaryText">After</p>
+              <div class="mx-auto max-w-[230px] rounded-[1.8rem] border-[8px] border-black bg-cardGray p-3">
+                <div class="rounded-xl bg-white p-3">
+                  <p class="text-xs text-secondaryText">StayDocs</p>
+                  <p class="text-sm font-bold text-primaryText">All bookings synced</p>
+                  <div class="mt-3 h-2 rounded bg-cardGray"></div>
+                  <div class="mt-2 h-2 rounded bg-cardGray"></div>
+                  <div class="mt-2 h-2 rounded bg-cardGray"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-12 grid gap-6 md:grid-cols-3">
+            <article class="rounded-2xl border border-black/5 bg-white p-6 shadow-card">
+              <div class="h-1 w-12 rounded bg-brandAmber"></div>
+              <h3 class="mt-4 text-xl font-bold text-primaryText">Morning Dashboard</h3>
+              <p class="mt-3 text-secondaryText">See arrivals, departures, occupancy, and revenue. Every morning. One screen.</p>
+            </article>
+            <article class="rounded-2xl border border-black/5 bg-white p-6 shadow-card">
+              <div class="h-1 w-12 rounded bg-brandAmber"></div>
+              <h3 class="mt-4 text-xl font-bold text-primaryText">Visual Calendar</h3>
+              <p class="mt-3 text-secondaryText">Dark bars show booked dates. White is available. Every room, every day, at a glance.</p>
+            </article>
+            <article class="rounded-2xl border border-black/5 bg-white p-6 shadow-card">
+              <div class="h-1 w-12 rounded bg-brandAmber"></div>
+              <h3 class="mt-4 text-xl font-bold text-primaryText">WhatsApp Summary</h3>
+              <p class="mt-3 text-secondaryText">Your staff gets a 7 AM WhatsApp with today's schedule. No app needed. No effort.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="how" class="fade-section px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto">
+          <p class="section-label text-xs font-bold">HOW IT WORKS</p>
+          <h2 class="mt-3 text-3xl font-bold text-primaryText md:text-4xl">Set up in 5 minutes. No training needed.</h2>
+
+          <div class="mt-10 grid gap-6 md:grid-cols-3">
+            <article class="rounded-2xl bg-cardGray p-6">
+              <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brandAmber font-bold text-white">1</span>
+              <h3 class="mt-4 text-xl font-bold text-primaryText">Add your rooms</h3>
+              <p class="mt-2 text-secondaryText">Room names, types, and prices. That's all we need.</p>
+            </article>
+            <article class="rounded-2xl bg-cardGray p-6">
+              <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brandAmber font-bold text-white">2</span>
+              <h3 class="mt-4 text-xl font-bold text-primaryText">Paste your calendar links</h3>
+              <p class="mt-2 text-secondaryText">Copy from Airbnb and Booking.com. Paste into StayDocs. Bookings sync automatically.</p>
+            </article>
+            <article class="rounded-2xl bg-cardGray p-6">
+              <span class="inline-flex h-9 w-9 items-center justify-center rounded-full bg-brandAmber font-bold text-white">3</span>
+              <h3 class="mt-4 text-xl font-bold text-primaryText">Open the app every morning</h3>
+              <p class="mt-2 text-secondaryText">Your dashboard shows everything. Staff gets a WhatsApp at 7 AM. Done.</p>
+            </article>
+          </div>
+
+          <a
+            href="#final-cta"
+            class="mt-10 inline-flex h-12 items-center rounded-lg border border-brandCharcoal px-6 font-semibold text-brandCharcoal"
+            >Try free with 3 rooms -></a
+          >
+        </div>
+      </section>
+
+      <section id="features" class="fade-section bg-cardGray px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto">
+          <p class="section-label text-xs font-bold">FEATURES</p>
+          <h2 class="mt-3 text-3xl font-bold text-primaryText md:text-4xl">Everything you need. Nothing you don't.</h2>
+
+          <div class="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">📊</p><h3 class="mt-3 font-bold">Today's Dashboard</h3><p class="mt-2 text-sm text-secondaryText">Arrivals, departures, occupancy, revenue at a glance</p></article>
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">📅</p><h3 class="mt-3 font-bold">Room Calendar</h3><p class="mt-2 text-sm text-secondaryText">See booked and available dates for every room</p></article>
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">🔄</p><h3 class="mt-3 font-bold">Auto Calendar Sync</h3><p class="mt-2 text-sm text-secondaryText">Airbnb, Booking.com, MakeMyTrip, Agoda - every 15 minutes</p></article>
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">➕</p><h3 class="mt-3 font-bold">Quick Add</h3><p class="mt-2 text-sm text-secondaryText">Walk-in guest? 4 taps, 10 seconds, done</p></article>
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">💰</p><h3 class="mt-3 font-bold">Payment Tracking</h3><p class="mt-2 text-sm text-secondaryText">Who paid, who hasn't, how much is pending</p></article>
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">💬</p><h3 class="mt-3 font-bold">WhatsApp Summary</h3><p class="mt-2 text-sm text-secondaryText">Staff gets a morning briefing. No app needed.</p></article>
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">👥</p><h3 class="mt-3 font-bold">Team Access</h3><p class="mt-2 text-sm text-secondaryText">Owner, manager, receptionist - each sees what they need</p></article>
+            <article class="rounded-2xl bg-white p-5 shadow-card"><p class="text-2xl text-brandAmber">📱</p><h3 class="mt-3 font-bold">Works on Phone</h3><p class="mt-2 text-sm text-secondaryText">Mobile-first. Install like a real app.</p></article>
+          </div>
+        </div>
+      </section>
+
+      <section id="proof" class="fade-section px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto text-center">
+          <h2 class="text-3xl font-bold text-primaryText md:text-[28px]">Built by someone who understands hospitality</h2>
+
+          <article class="mx-auto mt-8 max-w-2xl rounded-2xl border border-black/10 bg-white p-8 shadow-card">
+            <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-cardGray">
+              <svg class="h-8 w-8" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M30 10C20 10 12 18 12 28s8 18 18 18h6c4.4 0 8 3.6 8 8V30c0-11-9-20-20-20h6z" fill="#2D2D2D" />
+                <path d="M34 54c10 0 18-8 18-18S44 18 34 18h-6c-4.4 0-8-3.6-8-8v24c0 11 9 20 20 20h-6z" fill="#D4922A" />
+              </svg>
+            </div>
+            <blockquote class="mt-5 text-lg leading-relaxed text-primaryText">
+              "I've worked in hospitality in Gokarna and watched owners waste hours checking 5 different apps every morning. I built StayDocs to fix that - one screen, 30 seconds, done."
+            </blockquote>
+            <p class="mt-4 text-secondaryText">- Hari, Founder of StayDocs</p>
+          </article>
+
+          <p class="mt-10 text-5xl font-extrabold text-brandAmber">200+</p>
+          <p class="mt-2 text-secondaryText">property owners on the waitlist</p>
+
+          <div class="mt-6 flex flex-wrap items-center justify-center gap-2">
+            <span class="rounded-full bg-cardGray px-3 py-1 text-xs text-gray-400">Gokarna</span>
+            <span class="rounded-full bg-cardGray px-3 py-1 text-xs text-gray-400">Goa</span>
+            <span class="rounded-full bg-cardGray px-3 py-1 text-xs text-gray-400">Coorg</span>
+            <span class="rounded-full bg-cardGray px-3 py-1 text-xs text-gray-400">Manali</span>
+            <span class="rounded-full bg-cardGray px-3 py-1 text-xs text-gray-400">Kerala</span>
+            <span class="rounded-full bg-cardGray px-3 py-1 text-xs text-gray-400">Udaipur</span>
+            <span class="rounded-full bg-cardGray px-3 py-1 text-xs text-gray-400">Ooty</span>
+          </div>
+        </div>
+      </section>
+
+      <section id="pricing" class="fade-section bg-cardGray px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto">
+          <p class="section-label text-xs font-bold">PRICING</p>
+          <h2 class="mt-3 text-3xl font-bold text-primaryText md:text-4xl">Simpler than your cheapest room rate</h2>
+
+          <div class="mt-10 grid gap-6 lg:grid-cols-2">
+            <article class="rounded-2xl bg-white p-8 shadow-card">
+              <h3 class="text-2xl font-bold text-primaryText">Free</h3>
+              <p class="mt-4 text-4xl font-extrabold text-primaryText">₹0 <span class="text-base font-medium text-secondaryText">/forever</span></p>
+              <ul class="mt-6 space-y-2 text-primaryText">
+                <li><span class="text-successGreen">✓</span> 1 property</li>
+                <li><span class="text-successGreen">✓</span> 3 rooms</li>
+                <li><span class="text-successGreen">✓</span> 2 calendar syncs</li>
+                <li><span class="text-successGreen">✓</span> Basic dashboard</li>
+                <li><span class="text-successGreen">✓</span> Manual bookings</li>
+              </ul>
+              <a href="#final-cta" class="mt-8 inline-flex h-12 items-center rounded-lg border border-brandCharcoal px-6 font-semibold text-brandCharcoal">Start Free</a>
+            </article>
+
+            <article class="relative rounded-2xl border-t-4 border-brandAmber bg-white p-8 shadow-card">
+              <span class="absolute right-8 top-4 rounded-full bg-brandAmber px-3 py-1 text-xs font-semibold text-white">MOST POPULAR</span>
+              <h3 class="text-2xl font-bold text-primaryText">Pro</h3>
+              <p class="mt-4 text-4xl font-extrabold text-primaryText">₹299 <span class="text-base font-medium text-secondaryText">/month</span></p>
+              <p class="mt-2 text-xs text-gray-400 line-through">Compare: eZee ₹5,000 - DJUBO ₹2,000</p>
+              <ul class="mt-6 space-y-2 text-primaryText">
+                <li><span class="text-successGreen">✓</span> Everything in Free</li>
+                <li><span class="text-successGreen">✓</span> Unlimited rooms</li>
+                <li><span class="text-successGreen">✓</span> Unlimited calendar syncs</li>
+                <li><span class="text-successGreen">✓</span> WhatsApp daily summary</li>
+                <li><span class="text-successGreen">✓</span> Payment tracking</li>
+                <li><span class="text-successGreen">✓</span> Team members (up to 5)</li>
+                <li><span class="text-successGreen">✓</span> Seasonal pricing</li>
+                <li><span class="text-successGreen">✓</span> Multi-property (up to 3)</li>
+              </ul>
+              <a href="#final-cta" class="mt-8 inline-flex h-12 items-center rounded-lg bg-brandAmber px-6 font-semibold text-white">Join Waitlist for Pro</a>
+              <p class="mt-4 text-sm text-secondaryText">6-month: ₹1,499 (<span class="text-successGreen">save ₹295</span>) - Yearly: ₹2,999 (<span class="text-successGreen">save ₹589</span>)</p>
+            </article>
+          </div>
+
+          <p class="mx-auto mt-8 max-w-3xl text-center text-base italic text-secondaryText">
+            ₹299/month. That's less than one night in your cheapest room. And you're losing ₹15,000/month without it.
+          </p>
+        </div>
+      </section>
+
+      <section id="faq" class="fade-section px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto">
+          <p class="section-label text-xs font-bold">FAQ</p>
+          <h2 class="mt-3 text-3xl font-bold text-primaryText md:text-4xl">Common questions</h2>
+
+          <div class="mt-10 space-y-4" id="faq-list">
+            <article class="faq-item rounded-xl border border-black/10 p-5">
+              <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left">
+                <span class="font-semibold text-primaryText">How is StayDocs different from eZee or DJUBO?</span>
+                <span class="faq-arrow text-brandAmber">⌄</span>
+              </button>
+              <div class="faq-content pt-0">
+                <p class="pt-3 text-secondaryText">They're full hotel systems for 50-room properties. ₹2,000-15,000/month. Hours to learn. StayDocs is a simple booking dashboard for 1-15 room properties. ₹299/month. 5 minutes to set up.</p>
+              </div>
+            </article>
+
+            <article class="faq-item rounded-xl border border-black/10 p-5">
+              <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left">
+                <span class="font-semibold text-primaryText">Will it work with my Airbnb and Booking.com?</span>
+                <span class="faq-arrow text-brandAmber">⌄</span>
+              </button>
+              <div class="faq-content"><p class="pt-3 text-secondaryText">Yes. Paste your calendar export link and bookings sync automatically every 15 minutes.</p></div>
+            </article>
+
+            <article class="faq-item rounded-xl border border-black/10 p-5">
+              <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left">
+                <span class="font-semibold text-primaryText">Can my receptionist use it?</span>
+                <span class="faq-arrow text-brandAmber">⌄</span>
+              </button>
+              <div class="faq-content"><p class="pt-3 text-secondaryText">If they can use WhatsApp, they can use StayDocs. And with the daily WhatsApp summary, they don't even need to open the app.</p></div>
+            </article>
+
+            <article class="faq-item rounded-xl border border-black/10 p-5">
+              <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left">
+                <span class="font-semibold text-primaryText">What if I only have 3-5 rooms?</span>
+                <span class="faq-arrow text-brandAmber">⌄</span>
+              </button>
+              <div class="faq-content"><p class="pt-3 text-secondaryText">Perfect. That's exactly who we built this for. The free plan supports 3 rooms.</p></div>
+            </article>
+
+            <article class="faq-item rounded-xl border border-black/10 p-5">
+              <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left">
+                <span class="font-semibold text-primaryText">Is my data safe?</span>
+                <span class="faq-arrow text-brandAmber">⌄</span>
+              </button>
+              <div class="faq-content"><p class="pt-3 text-secondaryText">Enterprise-grade encryption. You can delete your account and all data anytime.</p></div>
+            </article>
+
+            <article class="faq-item rounded-xl border border-black/10 p-5">
+              <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left">
+                <span class="font-semibold text-primaryText">Does it work offline?</span>
+                <span class="faq-arrow text-brandAmber">⌄</span>
+              </button>
+              <div class="faq-content"><p class="pt-3 text-secondaryText">It caches your recent data so you can view your dashboard even with a weak connection.</p></div>
+            </article>
+
+            <article class="faq-item rounded-xl border border-black/10 p-5">
+              <button class="faq-toggle flex w-full items-center justify-between gap-4 text-left">
+                <span class="font-semibold text-primaryText">What happens after I join the waitlist?</span>
+                <span class="faq-arrow text-brandAmber">⌄</span>
+              </button>
+              <div class="faq-content"><p class="pt-3 text-secondaryText">You'll get notified when we launch. Early members get extended free trial and priority support.</p></div>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section id="final-cta" class="fade-section bg-brandCharcoal px-5 py-16 md:px-8 md:py-24">
+        <div class="site-wrap mx-auto text-center">
+          <div class="mx-auto inline-flex rounded-2xl bg-white p-3 shadow-card">
+            <img src="assets/staydocs-logo-cropped.png" alt="StayDocs brand logo" class="h-16 w-auto" />
+          </div>
+
+          <h2 class="mt-7 text-3xl font-extrabold text-white md:text-4xl">Ready to simplify your bookings?</h2>
+          <p class="mx-auto mt-3 max-w-2xl text-base text-[#B0B0B0]">Join 200+ property owners. We'll notify you when StayDocs launches.</p>
+
+          <form class="mx-auto mt-9 grid max-w-5xl gap-3 md:grid-cols-5" action="#" method="post" novalidate>
+            <input class="h-12 rounded-lg border border-white/15 bg-[#3D3D3D] px-4 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brandAmber" type="text" name="name" placeholder="Your Name" />
+            <input class="h-12 rounded-lg border border-white/15 bg-[#3D3D3D] px-4 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brandAmber" type="tel" name="phone" placeholder="Phone (+91)" />
+            <input class="h-12 rounded-lg border border-white/15 bg-[#3D3D3D] px-4 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brandAmber" type="text" name="property" placeholder="Property Name" />
+            <input class="h-12 rounded-lg border border-white/15 bg-[#3D3D3D] px-4 text-white placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-brandAmber" type="text" name="city" placeholder="City" />
+            <button class="h-12 rounded-lg bg-brandAmber px-5 font-semibold text-white" type="submit">Join Waitlist -></button>
+          </form>
+
+          <p class="mt-4 text-xs text-gray-400">No credit card - No spam - Free to join</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-footerDark px-5 py-12 md:px-8">
+      <div class="site-wrap mx-auto grid gap-8 md:grid-cols-3">
+        <div>
+          <img src="assets/staydocs-logo-cropped.png" alt="StayDocs logo" class="h-16 w-auto rounded bg-white p-2" />
+          <p class="mt-3 text-sm text-secondaryText">All Your Bookings In One Place</p>
+        </div>
+
+        <div class="flex flex-wrap items-start gap-4 text-sm text-white">
+          <a href="#features" class="hover:text-brandAmber">Features</a>
+          <a href="#pricing" class="hover:text-brandAmber">Pricing</a>
+          <a href="#faq" class="hover:text-brandAmber">FAQ</a>
+          <a href="#" class="hover:text-brandAmber">Privacy Policy</a>
+          <a href="#" class="hover:text-brandAmber">Terms of Service</a>
+        </div>
+
+        <div class="text-sm text-white">
+          <p>WhatsApp us: +91 XXXXXXXXXX</p>
+        </div>
+      </div>
+
+      <div class="site-wrap mx-auto mt-8 border-t border-white/10 pt-5 text-sm text-secondaryText">
+        © 2026 StayDocs - Built in India 🇮🇳
+      </div>
+    </footer>
+
+    <script>
+      const nav = document.getElementById('navbar');
+      const mobileMenu = document.getElementById('mobile-menu');
+      const menuBtn = document.getElementById('menu-btn');
+
+      menuBtn.addEventListener('click', () => {
+        mobileMenu.classList.toggle('hidden');
+      });
+
+      window.addEventListener('scroll', () => {
+        if (window.scrollY > 12) {
+          nav.classList.add('shadow-nav');
+        } else {
+          nav.classList.remove('shadow-nav');
+        }
+      });
+
+      document.querySelectorAll('#mobile-menu a').forEach((link) => {
+        link.addEventListener('click', () => mobileMenu.classList.add('hidden'));
+      });
+
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('in-view');
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      document.querySelectorAll('.fade-section').forEach((section) => observer.observe(section));
+
+      const faqItems = document.querySelectorAll('.faq-item');
+      faqItems.forEach((item) => {
+        const btn = item.querySelector('.faq-toggle');
+        btn.addEventListener('click', () => {
+          faqItems.forEach((other) => {
+            if (other !== item) other.classList.remove('open');
+          });
+          item.classList.toggle('open');
+        });
+      });
+    </script>
+  </body>
+</html>
